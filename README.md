@@ -5,7 +5,7 @@ jquery-stickynotes
 
 1. First create the object
 
-{var sticky = $('.container').sticky({
+,var sticky = $('.container').sticky({
     removed: function (noteId){
         // do something
     },
@@ -21,13 +21,13 @@ jquery-stickynotes
     resized: function (note){
         // do something
     }
-});}
+});
 
 2. then, add button event
 
 
-{$('.add-note').on('click', function (e){
+,$('.add-note').on('click', function (e){
     e.preventDefault();
     
     sticky.create();
-});}
+});
