@@ -1,6 +1,7 @@
 /*****************************************************************
  * @author: Russell Kid Benancio Flores
  * @since: 2013-10-01
+ * @email: ruzzll7@gmail.com
  * @version: 1.0
  * @require jquery, jquery-ui-resize, jquery-ui-draggable
  * @comments: based on http://www.jquery-sticky-notes.com/
