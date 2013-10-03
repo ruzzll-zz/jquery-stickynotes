@@ -1,0 +1,4 @@
+jquery-stickynotes
+==================
+
+sticky notes
