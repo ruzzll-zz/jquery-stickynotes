@@ -3,7 +3,7 @@ html,body {
 }
 
 .sticky-container {
-	/*background:url(../img/sticky/bg_wood.jpg) repeat-x scroll 0 0;*/
+	/*background:url(../img/sticky/bg_wood.jpg) repeat-x scroll 0 0;*//**/
 	position: absolute;
     top: 0;
     left: 0;
