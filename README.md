@@ -5,7 +5,8 @@ jquery-stickynotes
 
 1. First create the object
 
-,var sticky = $('.container').sticky({
+```bash
+var sticky = $('.container').sticky({
     removed: function (noteId){
         // do something
     },
@@ -22,12 +23,14 @@ jquery-stickynotes
         // do something
     }
 });
+```
 
 2. then, add button event
 
-
-,$('.add-note').on('click', function (e){
+```bash
+$('.add-note').on('click', function (e){
     e.preventDefault();
     
     sticky.create();
 });
+```
