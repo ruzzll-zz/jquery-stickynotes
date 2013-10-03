@@ -7,7 +7,7 @@
  * @comments: based on http://www.jquery-sticky-notes.com/
  *********************************************************************************/
 (function ($, undefined){
-    $.sticky = {
+    $.stickyNotes = {
         defaults: {
             resizable: false,
             moved: null,
@@ -17,12 +17,12 @@
 
     var counter = 1;
 
-    var sticky = function (element, options){
+    var stickyNotes = function (element, options){
         var self = this;
 
         self.currentNoteId = null;
         self.notes = {};
-        self.options = $.extend({}, $.sticky.defaults, options || {});
+        self.options = $.extend({}, $.stickyNotes.defaults, options || {});
         self.container = $('<div class="sticky-container" />');
         element.append(self.container);
 
@@ -32,7 +32,7 @@
         });
     };
 
-    $.extend(sticky.prototype, {
+    $.extend(stickyNotes.prototype, {
         set: function (notes){
             $.each(notes, function (i, note){
                 self.render(note);
@@ -125,7 +125,7 @@
             }).html(note.text);
 
             var _div_note = $('<div class="jStickyNote" />');
-            var _div_background = $('<div class="background" />').html('<img src="images/sticky-bg.png" class="stretch" style="margin-top:5px;" alt="" />');
+            var _div_background = $('<div class="background" />').html('<img src="img/sticky/sticky-bg.png" class="stretch" style="margin-top:5px;" alt="" />');
             _div_note.append(_p_note_text);
 
             var _div_delete = $('<div class="jSticky-delete" />').on('click', function(){
@@ -185,8 +185,8 @@
     });
 
     $.fn.extend({
-        sticky: function (options){
-            return new sticky(this, options);
+        stickyNotes: function (options){
+            return new stickyNotes(this, options);
         }
     });
 })(jQuery);
