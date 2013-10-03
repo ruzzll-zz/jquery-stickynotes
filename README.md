@@ -1,7 +1,7 @@
 jquery-stickynotes
 ==================
 
-<b>How to use</b>
+### How to use
 
 1. First instance the object
 
