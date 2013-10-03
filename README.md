@@ -6,7 +6,7 @@ jquery-stickynotes
 1. First create the object
 
 ```bash
-var sticky = $('.container').sticky({
+var stickyNotes = $('.container').stickyNotes({
     removed: function (noteId){
         // do something
     },
@@ -31,6 +31,6 @@ var sticky = $('.container').sticky({
 $('.add-note').on('click', function (e){
     e.preventDefault();
     
-    sticky.create();
+    stickyNotes.create();
 });
 ```
