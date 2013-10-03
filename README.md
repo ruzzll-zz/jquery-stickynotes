@@ -3,7 +3,7 @@ jquery-stickynotes
 
 <b>How to use</b>
 
-1. First create the object
+1. First instance the object
 
 ```bash
 var stickyNotes = $('.container').stickyNotes({
