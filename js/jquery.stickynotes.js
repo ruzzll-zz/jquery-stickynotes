@@ -1,7 +1,6 @@
 /*****************************************************************
  * @author: Russell Kid Benancio Flores
  * @since: 2013-10-01
- * @email: ruzzll7@gmail.com
  * @version: 1.0
  * @require jquery, jquery-ui-resize, jquery-ui-draggable
  * @comments: based on http://www.jquery-sticky-notes.com/
@@ -23,12 +22,12 @@
         self.currentNoteId = null;
         self.notes = {};
         self.options = $.extend({}, $.stickyNotes.defaults, options || {});
-        self.container = $('<div class="sticky-container" />');
-        element.append(self.container);
+        self.container = element.addClass('sticky-container');
+        //self.container = $('<div class="sticky-container" />');
+        //element.append(self.container);
 
         self.container.on('click', function (e){
-            if(self.currentNoteId !== null)
-                self.stopEditing(self.currentNoteId);
+            self.stopEditing(self.currentNoteId);
         });
     };
 
@@ -74,6 +73,9 @@
         },
 
         stopEditing: function (noteId){
+            if(noteId === null)
+                return;
+
             var self = this,
                 note = $("#note-" + noteId, self.container),
                 text = $('textarea', note).val();
@@ -100,22 +102,26 @@
         },
 
         edit: function (noteId){
-            if(this.currentNoteId !== null)
-                this.stopEditing(this.currentNoteId);
+            var self = this;
 
-            var note = $('#note-' + noteId, this.container),
+            self.stopEditing(self.currentNoteId);
+
+            var note = $('#note-' + noteId, self.container),
                 html = $('p', note).html(),
                 textarea = $('<textarea class="editor ignore" id="textarea-note-' + noteId + '" />').val(html);
 
-            $('#p-note-' + noteId, this.container).replaceWith(textarea);
+            $('#p-note-' + noteId, self.container).replaceWith(textarea);
 
             textarea.css({
                 width: note.width() - 44,
                 height: note.height() - 15
             });
 
-            $('textarea', note).focus();
-            this.currentNoteId = noteId;
+            $('textarea', note).on('blur', function (){
+                self.stopEditing(self.currentNoteId);
+            }).focus();
+
+            self.currentNoteId = noteId;
         },
 
         render: function (note){
@@ -162,7 +168,15 @@
 
             _div_wrap.draggable({
                 containment: self.container,
-                //scroll: false,
+                // containment: self.container.parent(),
+                // opacity: 0.7,
+                drag: function (event, ui){
+                    // return false;
+                    /*if(_div_wrap.width() + ui.position.left >= self.container.width() - 20)
+                        return false;*/
+                    // console.log([self.container.width(), self.container.height(), ui.position]);
+                },
+                scroll: false,
                 stop: function(event, ui){
                     var _note = self.notes[note.id];
 
