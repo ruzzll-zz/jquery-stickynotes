@@ -9,6 +9,9 @@
     $.stickyNotes = {
         defaults: {
             resizable: false,
+            draggable: true,
+            editable: true,
+            edited: null,
             moved: null,
             resized: null
         }
@@ -126,17 +129,20 @@
 
         render: function (note){
             var self = this;
-            var _p_note_text = $('<p id="p-note-' + note.id + '" />').on('dblclick', function (e){
-                self.edit(note.id);
-            }).html(note.text);
+            var _p_note_text = $('<p id="p-note-' + note.id + '" />').html(note.text);
+
+            if(self.options.editable){
+                _p_note_text.on('dblclick', function (e){
+                    self.edit(note.id);
+                });
+            }
 
             var _div_note = $('<div class="jStickyNote" />');
+            if( ! self.options.editable)
+                _div_note.css({ cursor: 'default' });
+
             var _div_background = $('<div class="background" />').html('<img src="img/sticky/sticky-bg.png" class="stretch" style="margin-top:5px;" alt="" />');
             _div_note.append(_p_note_text);
-
-            var _div_delete = $('<div class="jSticky-delete" />').on('click', function(){
-                self.remove(note.id);
-            });
 
             var _div_wrap = $('<div class="jSticky-medium" />').css({
                 position: 'absolute',
@@ -148,10 +154,15 @@
             }).attr({
                 id: 'note-' + note.id
             }).append(_div_background)
-              .append(_div_note)
-              .append(_div_delete);
+              .append(_div_note);
 
-            if(self.options.resizable){
+            if(self.options.editable){
+                $('<div class="jSticky-delete" />').on('click', function(){
+                    self.remove(note.id);
+                }).appendTo(_div_wrap);
+            }
+
+            if(self.options.editable && self.options.resizable){
                 _div_wrap.resizable({
                     stop: function(event, ui) {
                         var _note = self.notes[note.id];
@@ -166,28 +177,30 @@
                 });
             }
 
-            _div_wrap.draggable({
-                containment: self.container,
-                // containment: self.container.parent(),
-                // opacity: 0.7,
-                drag: function (event, ui){
-                    // return false;
-                    /*if(_div_wrap.width() + ui.position.left >= self.container.width() - 20)
-                        return false;*/
-                    // console.log([self.container.width(), self.container.height(), ui.position]);
-                },
-                scroll: false,
-                stop: function(event, ui){
-                    var _note = self.notes[note.id];
+            if(self.options.editable && self.options.draggable){
+                _div_wrap.draggable({
+                    containment: self.container,
+                    // containment: self.container.parent(),
+                    // opacity: 0.7,
+                    drag: function (event, ui){
+                        // return false;
+                        /*if(_div_wrap.width() + ui.position.left >= self.container.width() - 20)
+                            return false;*/
+                        // console.log([self.container.width(), self.container.height(), ui.position]);
+                    },
+                    scroll: false,
+                    stop: function(event, ui){
+                        var _note = self.notes[note.id];
 
-                    $.extend(_note, {
-                        pos_y: ui.position.left,
-                        pos_x: ui.position.top
-                    });
+                        $.extend(_note, {
+                            pos_y: ui.position.left,
+                            pos_x: ui.position.top
+                        });
 
-                    $.isFunction(self.options.moved) && self.options.moved(_note);
-                }
-            });
+                        $.isFunction(self.options.moved) && self.options.moved(_note);
+                    }
+                });
+            }
 
             self.container.append(_div_wrap);
             self.notes[note.id] = note;
