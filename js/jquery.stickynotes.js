@@ -83,7 +83,9 @@
                 note = $("#note-" + noteId, self.container),
                 text = $('textarea', note).val();
 
-            // console.log([self.notes, noteId]);
+            // if it was deleted or removed
+            if( ! note.size())
+                return;
 
             self.notes[noteId].text = text;
 
