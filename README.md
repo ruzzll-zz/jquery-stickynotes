@@ -25,12 +25,6 @@ var stickyNotes = $('.container').stickyNotes({
 });
 ```
 
-Other options available: <br/>
-`'resizable'` (false) when true allows notes to be resized<br/>
-`'draggable'` (true)  when true allows notes to be dragged<br/>
-`'bgImage'`   (img/sticky/sticky-bg.png) allows using a custom background, or by disable image background (in favor of css)<br/>
-
-
 2. then, add button event
 
 ```bash
@@ -40,3 +34,9 @@ $('.add-note').on('click', function (e){
     stickyNotes.create();
 });
 ```
+
+
+Other options available: <br/>
+`'resizable'` (false) when true allows notes to be resized<br/>
+`'draggable'` (true)  when true allows notes to be dragged<br/>
+`'bgImage'`   (img/sticky/sticky-bg.png) allows using a custom background, or by disable image background (in favor of css)<br/>
