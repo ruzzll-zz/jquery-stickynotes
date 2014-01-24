@@ -24,7 +24,7 @@
 
         self.currentNoteId = null;
         self.notes = {};
-        self.options = $.extend({}, $.stickyNotes.defaults, options || {});
+        self.options = $.extend($.stickyNotes.defaults, options || {});
         self.container = element.addClass('sticky-container');
         //self.container = $('<div class="sticky-container" />');
         //element.append(self.container);
