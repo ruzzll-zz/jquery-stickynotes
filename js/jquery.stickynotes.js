@@ -13,7 +13,8 @@
             editable: true,
             edited: null,
             moved: null,
-            resized: null
+            resized: null,
+            bgImage: 'img/sticky/sticky-bg.png'
         }
     };
 
@@ -24,7 +25,7 @@
 
         self.currentNoteId = null;
         self.notes = {};
-        self.options = $.extend({}, $.stickyNotes.defaults, options || {});
+        self.options = $.extend($.stickyNotes.defaults, options || {});
         self.container = element.addClass('sticky-container');
         //self.container = $('<div class="sticky-container" />');
         //element.append(self.container);
@@ -89,7 +90,7 @@
 
             self.notes[noteId].text = text;
 
-            var _p_note_text = 	$('<p id="p-note-' + noteId + '" />').html(text);
+            var _p_note_text =         $('<p id="p-note-' + noteId + '" />').html(text);
             $('textarea', note).replaceWith(_p_note_text);
             $("#p-note-" + noteId, self.container).on('dblclick', function() {
                 self.edit(noteId);
@@ -143,7 +144,11 @@
             if( ! self.options.editable)
                 _div_note.css({ cursor: 'default' });
 
-            var _div_background = $('<div class="background" />').html('<img src="img/sticky/sticky-bg.png" class="stretch" style="margin-top:5px;" alt="" />');
+            var _div_background = $('<div class="background" />');
+            if(self.options.bgImage){
+                _div_background.html('<img src="' + self.options.bgImage + '" class="stretch" style="margin-top:5px;" alt="" />');
+            }
+
             _div_note.append(_p_note_text);
 
             var _div_wrap = $('<div class="jSticky-medium" />').css({
@@ -154,9 +159,9 @@
                 width: note.width,
                 height:note.height
             }).attr({
-                id: 'note-' + note.id
-            }).append(_div_background)
-              .append(_div_note);
+                    id: 'note-' + note.id
+                }).append(_div_background)
+                .append(_div_note);
 
             if(self.options.editable){
                 $('<div class="jSticky-delete" />').on('click', function(){
@@ -187,7 +192,7 @@
                     drag: function (event, ui){
                         // return false;
                         /*if(_div_wrap.width() + ui.position.left >= self.container.width() - 20)
-                            return false;*/
+                         return false;*/
                         // console.log([self.container.width(), self.container.height(), ui.position]);
                     },
                     scroll: false,
